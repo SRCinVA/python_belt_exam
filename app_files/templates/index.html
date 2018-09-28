@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    
+        <h1>Welcome!</h1>
+
+        <Fieldset>
+            <legend>Register</legend>
+            <form action="/register" method = 'POST'>
+                {% csrf_token %}                      
+                    <label for="name">Name</label>
+                    <input type="text" name="name"> 
+            
+                    <label for="alias">Alias</label>
+                    <input type="text" name="alias"> 
+
+                    <label for="email">email</label>
+                    <input type="text" name="email">
+
+                    <label for="password">Password</label>
+                    <input type="password" name="password">
+            
+                    <label for="confirm_password">Confirm PW</label>
+                    <input type="password" name="confirm_password">
+            
+                    <label for="date_of_birth">Date of Birth</label>
+                    <input type="date" name="date_of_birth">
+            
+                    <input type="submit" value="Register">
+    
+            </form>
+        </Fieldset>
+    
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}   
+        </ul>
+        {% endif %}
+    
+        <Fieldset>
+            <legend>Login</legend>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+
+                <label for="email">Email</label>
+                <input type="text" name="email">
+        
+                <label for="password">Password</label>
+                <input type="password" name="password">
+        
+                <input type="submit" value="Login">
+    
+            </form>
+        </Fieldset>
+
+    </body>
+</html>

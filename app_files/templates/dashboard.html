@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <div class="container">
+    
+            <div class="header">
+                <div class="welcome">
+                    <!--<p>Hello, {{request.session.user_id}}!</p>-->
+                    <!--<p>{{request.session.user.alias}}</p>-->
+                </div>
+                <div class="navbar">    
+                    <form action="/logout" method="POST">
+                            {% csrf_token %}
+                        <input type="submit" value="Logout">
+                    </form>
+                </div>
+            </div>
+    
+            <div class="your_favorites">
+            <fieldset>
+                <legend>Your Favorites</legend>
+                    {% for quote in fav_quotes %}
+                    <p>{{quote.author}}: {{quote.quote}}</p>
+                    <td>Posted by:<a href="/user/{{quote.user.id}}">{{quote.user.name}}</a></td>
+                    <p><a href="/your_favorites/{{quote.id}}"><button>Remove from my wishlist</button></a></p>
+                    </tr>
+                    {% endfor %}
+            </div>
+            </fieldset>
+
+            <div class="quotable_quotes">   
+                    <h1>Quotable Quotes</h1>
+                <table>
+                    {% for quote in quotes %}
+                    <tr>
+                        <!-- <td><a href="/quote/{{quote.id}}">{{quote.quote}}</a></td>
+                        <td>{{quote.quote}}</td>
+                        <td>Posted by: <a href="{{quote.user.alias}}"</a></td>
+                        <td><a href="/quotable_quotes/{{quote.id}}"><button>Add to My List ({{quote.favs.all|length}})</button></a></td>
+                        <td>{{item.favs.all}}</td> -->
+
+                    <tr>
+                        <!--<td><a href="/user/{{user.id}}">{{user.name}}</a></td>-->
+                        <td>{{quote.author}}:{{quote.quote}}</td>
+                        <td>Posted by:<a href="/user/{{quote.user.id}}">{{quote.user.name}}</a></td>
+                        <td><a href="/quotable_quotes/{{quote.id}}"><button>Add to my wish list ({{item.favs.all|length}})</button></a></td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+    
+        </div>
+
+        <p>Contribute a Quote</p>
+        <form action="/add_thing_in_dashboard" method="POST">
+            {% csrf_token %}
+
+            <label for="author">Quoted By:</label>
+            <input type="text" name="author">
+
+            <label for="quote">Message:</label>
+            <input type="text" name="quote">
+
+        <input type="submit" value="Add">
+        </form>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+</body>
+</html>
